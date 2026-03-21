@@ -1,6 +1,6 @@
 {
   "name": "ai-output-assert",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Rich assertion library for LLM outputs as Jest/Vitest matchers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
