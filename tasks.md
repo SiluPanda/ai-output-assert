@@ -4,33 +4,33 @@
 
 ### 1.1 Project Setup and Dependencies
 
-- [ ] **Install runtime dependencies** — Add `ajv` as a runtime dependency in package.json. | Status: not_done
-- [ ] **Install dev dependencies** — Add `vitest`, `typescript`, `eslint`, and related config packages as dev dependencies in package.json. | Status: not_done
-- [ ] **Add peer dependencies** — Add `zod` (optional) and `vitest`/`jest` (one required) as peer dependencies with `peerDependenciesMeta` marking them as optional where appropriate. | Status: not_done
-- [ ] **Configure Vitest** — Create `vitest.config.ts` with setup file reference. Ensure `npm run test` works with `vitest run`. | Status: not_done
-- [ ] **Configure ESLint** — Set up ESLint configuration for the project so `npm run lint` works. | Status: not_done
-- [ ] **Verify TypeScript config** — Confirm `tsconfig.json` settings are correct (ES2022 target, commonjs module, strict mode, declaration output). Adjust if needed. | Status: not_done
+- [x] **Install runtime dependencies** — Add `ajv` as a runtime dependency in package.json. | Status: done
+- [x] **Install dev dependencies** — Add `vitest`, `typescript`, `eslint`, and related config packages as dev dependencies in package.json. | Status: done
+- [ ] **Add peer dependencies** — Add `zod` (optional) and `vitest`/`jest` (one required) as peer dependencies with `peerDependenciesMeta` marking them as optional where appropriate. | Status: not_done (deferred to Phase 3 when schema matchers are implemented)
+- [x] **Configure Vitest** — Create `vitest.config.ts` with setup file reference. Ensure `npm run test` works with `vitest run`. | Status: done
+- [x] **Configure ESLint** — Set up ESLint configuration for the project so `npm run lint` works. | Status: done
+- [x] **Verify TypeScript config** — Confirm `tsconfig.json` settings are correct (ES2022 target, commonjs module, strict mode, declaration output). Adjust if needed. | Status: done
 
 ### 1.2 Type Definitions (`src/types.ts`)
 
-- [ ] **Define `MatcherResult` type** — `{ pass: boolean; message: () => string; details: Record<string, unknown> }`. Used as the return type for all matchers and standalone functions. | Status: not_done
-- [ ] **Define `EmbedFn` type** — `(text: string) => Promise<number[]>`. The pluggable embedding function signature. | Status: not_done
-- [ ] **Define `AIAssertionOptions` interface** — All configuration options for `setupAIAssertions()`: `embedFn`, `semanticThreshold`, `answerThreshold`, `consistencyThreshold`, `conciseMaxTokens`, `verboseMaxSentences`, `hedgingMaxRatio`, `repeatMaxRepetitions`, `systemPromptLeakThreshold`, `sentimentNeutralRange`, `customPIIPatterns`, `customToxicWords`, `customEntityAliases`, `customHedgingPhrases`, `customRefusalPhrases`. | Status: not_done
-- [ ] **Define `PIIPattern` interface** — `{ type: string; pattern: RegExp; validate?: (match: string) => boolean; label: string }`. | Status: not_done
-- [ ] **Define `ToxicWord` interface** — `{ word: string; severity: 'critical' | 'warning' | 'info' }`. | Status: not_done
-- [ ] **Define `PIIMatch` type** — `{ type: string; value: string; position: [number, number] }` for reporting detected PII instances. | Status: not_done
-- [ ] **Define tone-related types** — `Tone = 'formal' | 'casual' | 'technical' | 'friendly'`, `ToneScores = Record<Tone, number>`, sentiment type `'positive' | 'negative' | 'neutral'`, format type `'json' | 'markdown' | 'list' | 'csv' | 'xml' | 'yaml' | 'table'`. | Status: not_done
+- [x] **Define `MatcherResult` type** — `{ pass: boolean; message: () => string; details: Record<string, unknown> }`. Used as the return type for all matchers and standalone functions. | Status: done
+- [x] **Define `EmbedFn` type** — `(text: string) => Promise<number[]>`. The pluggable embedding function signature. | Status: done
+- [x] **Define `AIAssertionOptions` interface** — All configuration options for `setupAIAssertions()`: `embedFn`, `semanticThreshold`, `answerThreshold`, `consistencyThreshold`, `conciseMaxTokens`, `verboseMaxSentences`, `hedgingMaxRatio`, `repeatMaxRepetitions`, `systemPromptLeakThreshold`, `sentimentNeutralRange`, `customPIIPatterns`, `customToxicWords`, `customEntityAliases`, `customHedgingPhrases`, `customRefusalPhrases`. | Status: done
+- [x] **Define `PIIPattern` interface** — `{ type: string; pattern: RegExp; validate?: (match: string) => boolean; label: string }`. | Status: done
+- [x] **Define `ToxicWord` interface** — `{ word: string; severity: 'critical' | 'warning' | 'info' }`. | Status: done
+- [x] **Define `PIIMatch` type** — `{ type: string; value: string; position: [number, number] }` for reporting detected PII instances. | Status: done
+- [x] **Define tone-related types** — `Tone = 'formal' | 'casual' | 'technical' | 'friendly'`, `ToneScores = Record<Tone, number>`, sentiment type `'positive' | 'negative' | 'neutral'`, format type `'json' | 'markdown' | 'list' | 'csv' | 'xml' | 'yaml' | 'table'`. | Status: done
 
 ### 1.3 Utility Functions (`src/utils/`)
 
-- [ ] **Implement `cosine-similarity.ts`** — `cosineSimilarity(a: number[], b: number[]): number`. Compute dot product divided by product of magnitudes. Throw on dimension mismatch. Return 0 if either vector has zero magnitude. | Status: not_done
-- [ ] **Implement `embedding-cache.ts`** — In-memory `Map<string, number[]>` cache. Export a class or factory function that wraps an `EmbedFn` and caches results by input string. Cache is per-`setupAIAssertions()` call, not persisted. | Status: not_done
-- [ ] **Implement `tokenizer.ts`** — Word tokenization via `text.split(/\s+/).filter(Boolean)`. Export a `tokenize(text: string): string[]` function. | Status: not_done
-- [ ] **Implement `sentences.ts`** — Sentence splitting via regex handling `.`, `!`, `?` followed by whitespace or end-of-string. Exclude common abbreviations (Mr., Dr., etc.). Export `splitSentences(text: string): string[]`. | Status: not_done
-- [ ] **Implement `ngrams.ts`** — N-gram extraction. Export `extractNgrams(tokens: string[], n: number): string[]` returning array of n-word sequences joined by spaces. | Status: not_done
-- [ ] **Implement `regex-escape.ts`** — Export `escapeRegex(str: string): string` that escapes special regex characters in a string. | Status: not_done
-- [ ] **Implement `luhn.ts`** — Luhn checksum algorithm for credit card validation. Export `luhnCheck(num: string): boolean`. Strip non-digit characters, compute checksum, return `sum % 10 === 0`. | Status: not_done
-- [ ] **Implement `json-extract.ts`** — Extract JSON from markdown code fences. Export `extractJSONFromCodeFence(text: string): string | null`. Detect ` ```json ... ``` ` patterns and return the inner content. | Status: not_done
+- [x] **Implement `cosine-similarity.ts`** — `cosineSimilarity(a: number[], b: number[]): number`. Compute dot product divided by product of magnitudes. Throw on dimension mismatch. Return 0 if either vector has zero magnitude. | Status: done
+- [x] **Implement `embedding-cache.ts`** — In-memory `Map<string, number[]>` cache. Export a class or factory function that wraps an `EmbedFn` and caches results by input string. Cache is per-`setupAIAssertions()` call, not persisted. | Status: done
+- [x] **Implement `tokenizer.ts`** — Word tokenization via `text.split(/\s+/).filter(Boolean)`. Export a `tokenize(text: string): string[]` function. | Status: done
+- [x] **Implement `sentences.ts`** — Sentence splitting via regex handling `.`, `!`, `?` followed by whitespace or end-of-string. Exclude common abbreviations (Mr., Dr., etc.). Export `splitSentences(text: string): string[]`. | Status: done
+- [x] **Implement `ngrams.ts`** — N-gram extraction. Export `extractNgrams(tokens: string[], n: number): string[]` returning array of n-word sequences joined by spaces. | Status: done
+- [x] **Implement `regex-escape.ts`** — Export `escapeRegex(str: string): string` that escapes special regex characters in a string. | Status: done
+- [x] **Implement `luhn.ts`** — Luhn checksum algorithm for credit card validation. Export `luhnCheck(num: string): boolean`. Strip non-digit characters, compute checksum, return `sum % 10 === 0`. | Status: done
+- [x] **Implement `json-extract.ts`** — Extract JSON from markdown code fences. Export `extractJSONFromCodeFence(text: string): string | null`. Detect ` ```json ... ``` ` patterns and return the inner content. | Status: done
 
 ### 1.4 Setup Function (`src/setup.ts`)
 
@@ -43,7 +43,7 @@
 
 - [ ] **Export `setupAIAssertions`** — Re-export the setup function from `setup.ts`. | Status: not_done
 - [ ] **Export all standalone matcher functions** — Export each matcher as a standalone function (e.g., `checkSemanticSimilarity`, `checkContainsAllOf`, `checkValidJSON`, `checkMatchesSchema`, `checkTone`, `checkPII`, `checkRefusal`, `checkTruncation`, etc.). | Status: not_done
-- [ ] **Export all types** — Re-export `MatcherResult`, `EmbedFn`, `AIAssertionOptions`, `PIIPattern`, `ToxicWord`, and all other public types from `types.ts`. | Status: not_done
+- [x] **Export all types** — Re-export `MatcherResult`, `EmbedFn`, `AIAssertionOptions`, `PIIPattern`, `ToxicWord`, and all other public types from `types.ts`. | Status: done
 
 ---
 
@@ -138,7 +138,7 @@
 
 ### 5.1 Embedding Cache (`src/utils/embedding-cache.ts`)
 
-- [ ] **Implement embedding cache** — Wrap an `EmbedFn` with `Map<string, number[]>` caching. On cache miss, call the underlying `embedFn` and store the result. On cache hit, return the cached vector. Cache is scoped to a single `setupAIAssertions()` call. | Status: not_done
+- [x] **Implement embedding cache** — Wrap an `EmbedFn` with `Map<string, number[]>` caching. On cache miss, call the underlying `embedFn` and store the result. On cache hit, return the cached vector. Cache is scoped to a single `setupAIAssertions()` call. | Status: done
 
 ### 5.2 Semantic Matchers (`src/matchers/semantic/`)
 
@@ -167,14 +167,14 @@
 
 ### 7.1 Utility Tests (`src/__tests__/utils/`)
 
-- [ ] **Test `cosine-similarity`** — Identical vectors return 1.0. Orthogonal vectors return 0. Opposite vectors return -1. Dimension mismatch throws. Zero-magnitude vector returns 0. | Status: not_done
-- [ ] **Test `tokenizer`** — Basic whitespace splitting. Multiple spaces. Tabs and newlines. Empty string returns empty array. | Status: not_done
-- [ ] **Test `sentences`** — Basic sentence splitting on `.!?`. Handles abbreviations (Mr., Dr., etc.). Handles end-of-string without punctuation. Empty string returns empty array. | Status: not_done
-- [ ] **Test `luhn`** — Valid credit card numbers pass. Invalid numbers fail. Non-digit characters are stripped. | Status: not_done
-- [ ] **Test `ngrams`** — Extracts correct n-grams from token arrays. Edge cases: fewer tokens than n returns empty. | Status: not_done
-- [ ] **Test `regex-escape`** — Escapes special regex characters. Regular strings pass through unchanged. | Status: not_done
-- [ ] **Test `json-extract`** — Extracts JSON from ` ```json...``` ` blocks. Returns null for non-fenced content. Handles multiple code blocks. | Status: not_done
-- [ ] **Test `embedding-cache`** — Cache hit returns stored vector without calling embedFn again. Cache miss calls embedFn. Same input on second call uses cache. | Status: not_done
+- [x] **Test `cosine-similarity`** — Identical vectors return 1.0. Orthogonal vectors return 0. Opposite vectors return -1. Dimension mismatch throws. Zero-magnitude vector returns 0. | Status: done
+- [x] **Test `tokenizer`** — Basic whitespace splitting. Multiple spaces. Tabs and newlines. Empty string returns empty array. | Status: done
+- [x] **Test `sentences`** — Basic sentence splitting on `.!?`. Handles abbreviations (Mr., Dr., etc.). Handles end-of-string without punctuation. Empty string returns empty array. | Status: done
+- [x] **Test `luhn`** — Valid credit card numbers pass. Invalid numbers fail. Non-digit characters are stripped. | Status: done
+- [x] **Test `ngrams`** — Extracts correct n-grams from token arrays. Edge cases: fewer tokens than n returns empty. | Status: done
+- [x] **Test `regex-escape`** — Escapes special regex characters. Regular strings pass through unchanged. | Status: done
+- [x] **Test `json-extract`** — Extracts JSON from ` ```json...``` ` blocks. Returns null for non-fenced content. Handles multiple code blocks. | Status: done
+- [x] **Test `embedding-cache`** — Cache hit returns stored vector without calling embedFn again. Cache miss calls embedFn. Same input on second call uses cache. | Status: done
 
 ### 7.2 Semantic Matcher Tests (`src/__tests__/semantic/`)
 
@@ -249,7 +249,7 @@
 
 ## Phase 8: Documentation
 
-- [ ] **Create README.md** — Quick start guide, installation instructions, setup examples for Vitest and Jest, matcher reference table (all 28 matchers with category, sync/async, parameters), standalone usage examples, configuration reference, integration examples with output-grade/prompt-snap/llm-regression/llm-vcr. | Status: not_done
+- [x] **Create README.md** — Quick start guide, installation instructions, utility function reference, type exports, planned features overview. Full matcher reference table will be added when matchers are implemented. | Status: done
 - [ ] **Add JSDoc comments to all public API functions** — `setupAIAssertions`, all standalone matcher functions, all exported types. Include parameter descriptions, return types, and usage examples. | Status: not_done
 
 ---
