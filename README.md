@@ -3,6 +3,7 @@
 Rich assertion library for LLM outputs -- 25+ matchers for Jest and Vitest.
 
 [![npm version](https://img.shields.io/npm/v/ai-output-assert.svg)](https://www.npmjs.com/package/ai-output-assert)
+[![npm downloads](https://img.shields.io/npm/dt/ai-output-assert.svg)](https://www.npmjs.com/package/ai-output-assert)
 [![license](https://img.shields.io/npm/l/ai-output-assert.svg)](https://github.com/SiluPanda/ai-output-assert/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/ai-output-assert.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
