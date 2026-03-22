@@ -73,7 +73,7 @@ export function toHaveTone(received: string, expected: Tone): MatcherResult {
     const contractionRate = wordCount > 0 ? contractionCount / wordCount : 0;
     const informalCount = tokens.filter((t) => INFORMAL_WORDS.has(t.toLowerCase())).length;
     const informalRate = wordCount > 0 ? informalCount / wordCount : 0;
-    score = contractionRate * 0.5 + informalRate * 10 * 0.5;
+    score = contractionRate * 0.5 + informalRate * 0.5;
     detected = score >= 0.1 ? 'casual' : 'formal';
     reason = `contraction rate: ${contractionRate.toFixed(2)}, informal word rate: ${informalRate.toFixed(2)}`;
   } else if (expected === 'technical') {
