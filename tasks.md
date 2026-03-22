@@ -34,15 +34,15 @@
 
 ### 1.4 Setup Function (`src/setup.ts`)
 
-- [ ] **Implement `setupAIAssertions(options?)`** — Accept `AIAssertionOptions`, store global configuration, call `expect.extend()` with all 28 matchers. Handle both Jest and Vitest framework detection. | Status: not_done
-- [ ] **Implement framework detection** — Check for global `expect` (Jest) or imported `expect` from `vitest`. Support explicit `expect` passed in options. Throw descriptive error if neither framework detected. | Status: not_done
-- [ ] **Implement global config storage** — Store options in a module-level variable accessible by all matchers. Support re-calling `setupAIAssertions()` (last call wins). | Status: not_done
+- [x] **Implement `setupAIAssertions(options?)`** — Accept `AIAssertionOptions`, store global configuration, call `expect.extend()` with all 28 matchers. Handle both Jest and Vitest framework detection. | Status: done
+- [x] **Implement framework detection** — Check for global `expect` (Jest) or imported `expect` from `vitest`. Support explicit `expect` passed in options. Throw descriptive error if neither framework detected. | Status: done
+- [x] **Implement global config storage** — Store options in a module-level variable accessible by all matchers. Support re-calling `setupAIAssertions()` (last call wins). | Status: done
 - [ ] **Merge custom patterns with built-in catalogs** — Append `customPIIPatterns`, `customToxicWords`, `customEntityAliases`, `customHedgingPhrases`, `customRefusalPhrases` to their respective built-in catalogs (not replace). | Status: not_done
 
 ### 1.5 Public API Exports (`src/index.ts`)
 
-- [ ] **Export `setupAIAssertions`** — Re-export the setup function from `setup.ts`. | Status: not_done
-- [ ] **Export all standalone matcher functions** — Export each matcher as a standalone function (e.g., `checkSemanticSimilarity`, `checkContainsAllOf`, `checkValidJSON`, `checkMatchesSchema`, `checkTone`, `checkPII`, `checkRefusal`, `checkTruncation`, etc.). | Status: not_done
+- [x] **Export `setupAIAssertions`** — Re-export the setup function from `setup.ts`. | Status: done
+- [x] **Export all standalone matcher functions** — Export each matcher as a standalone function (e.g., `checkSemanticSimilarity`, `checkContainsAllOf`, `checkValidJSON`, `checkMatchesSchema`, `checkTone`, `checkPII`, `checkRefusal`, `checkTruncation`, etc.). | Status: done
 - [x] **Export all types** — Re-export `MatcherResult`, `EmbedFn`, `AIAssertionOptions`, `PIIPattern`, `ToxicWord`, and all other public types from `types.ts`. | Status: done
 
 ---
@@ -51,17 +51,17 @@
 
 ### 2.1 Format Matchers (`src/matchers/format/`)
 
-- [ ] **Implement `toStartWith`** — Trim leading whitespace from received, check `startsWith(prefix)`. Return detailed failure message showing what the output actually starts with. | Status: not_done
-- [ ] **Implement `toEndWith`** — Trim trailing whitespace from received, check `endsWith(suffix)`. Return detailed failure message showing what the output actually ends with. | Status: not_done
-- [ ] **Implement `toBeFormattedAs`** — Support 7 format types: `json` (JSON.parse), `markdown` (heading/code fence/link/emphasis detection), `list` (numbered/bullet patterns), `csv` (consistent comma-separated columns), `xml` (matched open/close tags), `yaml` (key: value patterns), `table` (pipe-separated with dash separator row). | Status: not_done
-- [ ] **Implement `toHaveListItems`** — Detect list items via numbered patterns (`1.`, `2)`, `(a)`) and bullet patterns (`-`, `*`, `+`). Accept `min` (default 1) and `max` (default Infinity). Return count of detected items in failure message. | Status: not_done
+- [x] **Implement `toStartWith`** — Trim leading whitespace from received, check `startsWith(prefix)`. Return detailed failure message showing what the output actually starts with. | Status: done
+- [x] **Implement `toEndWith`** — Trim trailing whitespace from received, check `endsWith(suffix)`. Return detailed failure message showing what the output actually ends with. | Status: done
+- [x] **Implement `toBeFormattedAs`** — Support 7 format types: `json` (JSON.parse), `markdown` (heading/code fence/link/emphasis detection), `list` (numbered/bullet patterns), `csv` (consistent comma-separated columns), `xml` (matched open/close tags), `yaml` (key: value patterns), `table` (pipe-separated with dash separator row). | Status: done
+- [x] **Implement `toHaveListItems`** — Detect list items via numbered patterns (`1.`, `2)`, `(a)`) and bullet patterns (`-`, `*`, `+`). Accept `min` (default 1) and `max` (default Infinity). Return count of detected items in failure message. | Status: done
 
 ### 2.2 Content Matchers (`src/matchers/content/`)
 
-- [ ] **Implement `toContainAllOf`** — For each keyword, construct case-insensitive word-boundary regex (`\b...\b`). Collect missing keywords. Pass if none missing. Failure message lists present and missing keywords. | Status: not_done
-- [ ] **Implement `toContainAnyOf`** — Same regex construction as `toContainAllOf`. Pass if at least one keyword matches. Failure message lists all checked keywords. | Status: not_done
-- [ ] **Implement `toNotContain`** — Same regex construction. Pass if no keyword matches. Failure message lists found keywords. | Status: not_done
-- [ ] **Implement `toMentionEntity`** — Check built-in entity alias table first, then fall back to case-insensitive substring match. Pass if any form of the entity is found. Failure message lists checked aliases. | Status: not_done
+- [x] **Implement `toContainAllOf`** — For each keyword, construct case-insensitive word-boundary regex (`\b...\b`). Collect missing keywords. Pass if none missing. Failure message lists present and missing keywords. | Status: done
+- [x] **Implement `toContainAnyOf`** — Same regex construction as `toContainAllOf`. Pass if at least one keyword matches. Failure message lists all checked keywords. | Status: done
+- [x] **Implement `toNotContain`** — Same regex construction. Pass if no keyword matches. Failure message lists found keywords. | Status: done
+- [x] **Implement `toMentionEntity`** — Check built-in entity alias table first, then fall back to case-insensitive substring match. Pass if any form of the entity is found. Failure message lists checked aliases. | Status: done
 
 ### 2.3 Catalogs: Entity Aliases (`src/catalogs/entity-aliases.ts`)
 
@@ -73,33 +73,33 @@
 
 ### 3.1 Structural Matchers (`src/matchers/structural/`)
 
-- [ ] **Implement `toBeValidJSON`** — Attempt `JSON.parse(received)`. If fails, try extracting JSON from markdown code fences. If JSON found in code fence, still fail but note it in the message. Include parse error details in failure message. | Status: not_done
+- [x] **Implement `toBeValidJSON`** — Attempt `JSON.parse(received)`. If fails, try extracting JSON from markdown code fences. If JSON found in code fence, still fail but note it in the message. Include parse error details in failure message. | Status: done
 - [ ] **Implement `toMatchSchema` (Zod path)** — Detect Zod schema by checking for `.safeParse` method. Parse received as JSON, call `.safeParse()`, collect `error.issues`, format as human-readable messages with paths (`issue.path.join('.') + ': ' + issue.message`). Report all errors, not just first. | Status: not_done
-- [ ] **Implement `toMatchSchema` (JSON Schema path)** — Detect JSON Schema (no `.safeParse`). Use `ajv` to compile and validate. Collect `ajv.errors`, format with JSON pointer paths (`error.instancePath + ' ' + error.message`). Report all errors. | Status: not_done
-- [ ] **Implement `toHaveJSONFields`** — Parse received as JSON. Resolve dot-notation field paths (e.g., `"user.address.city"` -> `parsed.user.address.city`). `null` values count as present. Collect missing fields. | Status: not_done
-- [ ] **Implement `toBeValidMarkdown`** — Check: (1) code fence balance (odd triple-backtick count = unclosed), (2) heading level progression (no skipping >1 level), (3) link targets not empty (`[text]()` = bad), (4) emphasis marker balance (`*`/`_` even counts). Heading warnings don't fail alone; unclosed fences and empty links are critical. | Status: not_done
-- [ ] **Implement `toContainCodeBlock`** — Search for fenced code blocks (triple-backtick pattern). If `language` parameter provided, check for matching language tag (case-insensitive). Report which languages were found in failure message. | Status: not_done
+- [x] **Implement `toMatchSchema` (JSON Schema path)** — Detect JSON Schema (no `.safeParse`). Use `ajv` to compile and validate. Collect `ajv.errors`, format with JSON pointer paths (`error.instancePath + ' ' + error.message`). Report all errors. | Status: done
+- [x] **Implement `toHaveJSONFields`** — Parse received as JSON. Resolve dot-notation field paths (e.g., `"user.address.city"` -> `parsed.user.address.city`). `null` values count as present. Collect missing fields. | Status: done
+- [x] **Implement `toBeValidMarkdown`** — Check: (1) code fence balance (odd triple-backtick count = unclosed), (2) heading level progression (no skipping >1 level), (3) link targets not empty (`[text]()` = bad), (4) emphasis marker balance (`*`/`_` even counts). Heading warnings don't fail alone; unclosed fences and empty links are critical. | Status: done
+- [x] **Implement `toContainCodeBlock`** — Search for fenced code blocks (triple-backtick pattern). If `language` parameter provided, check for matching language tag (case-insensitive). Report which languages were found in failure message. | Status: done
 
 ### 3.2 PII Pattern Catalog (`src/catalogs/pii-patterns.ts`)
 
-- [ ] **Implement email pattern** — `/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g` | Status: not_done
-- [ ] **Implement US phone pattern** — `/(?:\+?1[-.\s]?)?\(?[2-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g` | Status: not_done
+- [x] **Implement email pattern** — `/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g` | Status: done
+- [x] **Implement US phone pattern** — `/(?:\+?1[-.\s]?)?\(?[2-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g` | Status: done
 - [ ] **Implement international phone pattern** — `/\+\d{1,3}[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g` | Status: not_done
-- [ ] **Implement SSN pattern (dashed)** — `/\b\d{3}-\d{2}-\d{4}\b/g` | Status: not_done
+- [x] **Implement SSN pattern (dashed)** — `/\b\d{3}-\d{2}-\d{4}\b/g` | Status: done
 - [ ] **Implement SSN pattern (no dashes)** — `/\b\d{9}\b/g` with context-word requirement ("SSN", "social security", "tax ID"). | Status: not_done
-- [ ] **Implement credit card patterns** — Visa, Mastercard, Amex patterns with Luhn checksum validation via `luhnCheck()`. | Status: not_done
-- [ ] **Implement IPv4 pattern** — Dotted-quad with exclusions for localhost (127.0.0.1), all-zeros (0.0.0.0), broadcast (255.255.255.255), and documentation ranges (192.0.2.x, 198.51.100.x, 203.0.113.x). | Status: not_done
+- [x] **Implement credit card patterns** — Visa, Mastercard, Amex patterns with Luhn checksum validation via `luhnCheck()`. | Status: done
+- [x] **Implement IPv4 pattern** — Dotted-quad with exclusions for localhost (127.0.0.1), all-zeros (0.0.0.0), broadcast (255.255.255.255), and documentation ranges (192.0.2.x, 198.51.100.x, 203.0.113.x). | Status: done
 - [ ] **Implement US street address pattern** — `/\b\d{1,5}\s+(?:[A-Z][a-z]+\s+){1,3}(?:St|Street|Ave|Avenue|Blvd|Boulevard|Dr|Drive|Ln|Lane|Rd|Road|Ct|Court|Way|Pl|Place)\.?\b/gi` | Status: not_done
 
 ### 3.3 Safety Matchers (`src/matchers/safety/`)
 
-- [ ] **Implement `toNotContainPII`** — Iterate PII pattern catalog against received text. Collect all matches with type, value, and position. Run Luhn validation for credit card matches. Pass if zero PII instances detected. Failure message lists each detected PII with type, redacted value, and position. | Status: not_done
-- [ ] **Implement `toNotContainToxicContent`** — Match toxic word list as whole words (word-boundary regex) to avoid Scunthorpe problem. Categorize by severity (critical/warning/info). Pass if no critical or warning matches. Report info-level matches without failing. Redact matched words in error messages for safety. | Status: not_done
-- [ ] **Implement `toNotLeakSystemPrompt`** — Normalize both output and system prompt (lowercase, collapse whitespace). Extract 5-grams from system prompt. Count how many appear in output. Compute leakage ratio. Also check for verbatim substrings of 50+ characters. Pass if leakage ratio < 0.15 AND no long verbatim matches. Failure message shows sample leaked phrases. | Status: not_done
+- [x] **Implement `toNotContainPII`** — Iterate PII pattern catalog against received text. Collect all matches with type, value, and position. Run Luhn validation for credit card matches. Pass if zero PII instances detected. Failure message lists each detected PII with type, redacted value, and position. | Status: done
+- [x] **Implement `toNotContainToxicContent`** — Match toxic word list as whole words (word-boundary regex) to avoid Scunthorpe problem. Categorize by severity (critical/warning/info). Pass if no critical or warning matches. Report info-level matches without failing. Redact matched words in error messages for safety. | Status: done
+- [x] **Implement `toNotLeakSystemPrompt`** — Normalize both output and system prompt (lowercase, collapse whitespace). Extract 5-grams from system prompt. Count how many appear in output. Compute leakage ratio. Also check for verbatim substrings of 50+ characters. Pass if leakage ratio < 0.15 AND no long verbatim matches. Failure message shows sample leaked phrases. | Status: done
 
 ### 3.4 Catalogs: Toxic Words (`src/catalogs/toxic-words.ts`)
 
-- [ ] **Create toxic word catalog** — Curated list of toxic terms categorized by severity: slurs (critical), profanity (warning), mild language (info). Design for whole-word matching to avoid false positives. Support extension via `customToxicWords`. | Status: not_done
+- [x] **Create toxic word catalog** — Curated list of toxic terms categorized by severity: slurs (critical), profanity (warning), mild language (info). Design for whole-word matching to avoid false positives. Support extension via `customToxicWords`. | Status: done
 
 ---
 
@@ -109,28 +109,28 @@
 
 - [ ] **Create contractions list** — (`src/catalogs/contractions.ts`) Full list of common English contractions: don't, can't, won't, it's, I'm, we're, they're, I've, you've, etc. Used for tone detection. | Status: not_done
 - [ ] **Create filler words list** — (`src/catalogs/filler-words.ts`) "basically", "actually", "literally", "like" (as filler), "kind of", "sort of", "you know", "I mean". Used for tone detection. | Status: not_done
-- [ ] **Create hedging phrases catalog** — (`src/catalogs/hedging-phrases.ts`) "I think", "I believe", "probably", "possibly", "perhaps", "maybe", "might", "it seems", "it appears", "approximately", "roughly", "in my opinion", "as far as I know", "I could be wrong", etc. Support extension via `customHedgingPhrases`. | Status: not_done
-- [ ] **Create refusal phrases catalog** — (`src/catalogs/refusal-phrases.ts`) Full refusal: "I cannot", "I can't", "I'm unable to", "I won't", "goes against my guidelines". Partial: "I must note that", "while I can help with", "please be aware". Support extension via `customRefusalPhrases`. | Status: not_done
+- [x] **Create hedging phrases catalog** — (`src/catalogs/hedging-phrases.ts`) "I think", "I believe", "probably", "possibly", "perhaps", "maybe", "might", "it seems", "it appears", "approximately", "roughly", "in my opinion", "as far as I know", "I could be wrong", etc. Support extension via `customHedgingPhrases`. | Status: done
+- [x] **Create refusal phrases catalog** — (`src/catalogs/refusal-phrases.ts`) Full refusal: "I cannot", "I can't", "I'm unable to", "I won't", "goes against my guidelines". Partial: "I must note that", "while I can help with", "please be aware". Support extension via `customRefusalPhrases`. | Status: done
 - [ ] **Create sentiment lexicon** — (`src/catalogs/sentiment-lexicon.ts`) Positive words (+1): "good", "great", "excellent", "wonderful", etc. Negative words (-1): "bad", "terrible", "awful", "disappointing", etc. Used for `toHaveSentiment`. | Status: not_done
 
 ### 4.2 Tone Matchers (`src/matchers/tone/`)
 
 - [ ] **Implement tone analyzer utilities** — Contraction counter (count/total words), sentence length analyzer (average words per sentence), passive voice detector (`was/were/is/are/been + word ending in -ed/-en`), pronoun counter (first/second person counts), filler word counter. Each returns a 0-1 normalized ratio. | Status: not_done
-- [ ] **Implement `toHaveTone`** — Compute weighted scores for formal, casual, technical, friendly tones using the heuristic signals specified in the spec (contraction rate, sentence length, passive voice, pronoun usage, filler words, code-like tokens, politeness markers, exclamation marks, etc.). Select tone with highest score. Pass if detected tone matches expected. Failure message shows all tone scores and signal breakdowns. | Status: not_done
-- [ ] **Implement `toBeConcise`** — Split on whitespace, count tokens, pass if count <= maxTokens. Failure message shows token count vs. limit and first 200 chars of received. | Status: not_done
-- [ ] **Implement `toNotBeVerbose`** — Split into sentences (reuse `sentences.ts`). Count sentences, check against `maxSentences` (default 10). Also check for 3-gram phrase repetition (any 3-gram appearing >3 times). Pass if sentence count <= max AND no excessive repetition. | Status: not_done
+- [x] **Implement `toHaveTone`** — Compute weighted scores for formal, casual, technical, friendly tones using the heuristic signals specified in the spec (contraction rate, sentence length, passive voice, pronoun usage, filler words, code-like tokens, politeness markers, exclamation marks, etc.). Select tone with highest score. Pass if detected tone matches expected. Failure message shows all tone scores and signal breakdowns. | Status: done
+- [x] **Implement `toBeConcise`** — Split on whitespace, count tokens, pass if count <= maxTokens. Failure message shows token count vs. limit and first 200 chars of received. | Status: done
+- [x] **Implement `toNotBeVerbose`** — Split into sentences (reuse `sentences.ts`). Count sentences, check against `maxSentences` (default 10). Also check for 3-gram phrase repetition (any 3-gram appearing >3 times). Pass if sentence count <= max AND no excessive repetition. | Status: done
 
 ### 4.3 Sentiment Matcher (`src/matchers/content/sentiment.ts`)
 
-- [ ] **Implement `toHaveSentiment`** — Tokenize output. Score each word against sentiment lexicon (+1/-1/0). Apply negation handling: negation word within 3-word window inverts score. Apply intensifier handling: "very"/"extremely"/"incredibly" multiplies score by 1.5. Sum and normalize by token count. Classify: score > 0.1 = positive, < -0.1 = negative, else neutral. Pass if classified sentiment matches expected. Failure message shows score, detected sentiment, and top signals. | Status: not_done
+- [x] **Implement `toHaveSentiment`** — Tokenize output. Score each word against sentiment lexicon (+1/-1/0). Apply negation handling: negation word within 3-word window inverts score. Apply intensifier handling: "very"/"extremely"/"incredibly" multiplies score by 1.5. Sum and normalize by token count. Classify: score > 0.1 = positive, < -0.1 = negative, else neutral. Pass if classified sentiment matches expected. Failure message shows score, detected sentiment, and top signals. | Status: done
 
 ### 4.4 Quality Matchers (`src/matchers/quality/`)
 
-- [ ] **Implement `toNotBeRefusal`** — Check output against refusal phrase catalog. Compute refusal density (refusal phrases / total sentences). Full refusal (density > 0.5): fail. Partial refusal (0 < density <= 0.5): pass with warning in details. No refusal phrases: pass. Failure message lists detected refusal phrases with line numbers and density. | Status: not_done
-- [ ] **Implement `toNotBeTruncated`** — Check: (1) bracket balance `{}[]()`, (2) code fence balance, (3) last line ends with terminal punctuation (`.!?:}])`) or is a list item/heading — not mid-word or ending with comma/conjunction, (4) quote mark balance. Pass if no truncation indicators. Failure message lists all truncation indicators found. | Status: not_done
-- [ ] **Implement `toNotBeHedged`** — Split into sentences. Check each against hedging phrase catalog (case-insensitive). Compute hedging ratio (sentences with hedging / total). Pass if ratio <= maxHedgingRatio (default 0.3). Failure message shows ratio, lists detected hedging phrases with sentence numbers. | Status: not_done
-- [ ] **Implement `toBeCompleteJSON`** — Combine `toBeValidJSON` and `toNotBeTruncated`. Fail if either fails, combining both failure messages. | Status: not_done
-- [ ] **Implement `toNotRepeat`** — Split into sentences, count sentence frequencies. If any sentence appears > maxRepetitions (default 3) times, fail. Extract 4-grams, if any 4-gram appears > maxRepetitions * 2 times, fail. Failure message shows repeated sentences/phrases and their counts. | Status: not_done
+- [x] **Implement `toNotBeRefusal`** — Check output against refusal phrase catalog. Compute refusal density (refusal phrases / total sentences). Full refusal (density > 0.5): fail. Partial refusal (0 < density <= 0.5): pass with warning in details. No refusal phrases: pass. Failure message lists detected refusal phrases with line numbers and density. | Status: done
+- [x] **Implement `toNotBeTruncated`** — Check: (1) bracket balance `{}[]()`, (2) code fence balance, (3) last line ends with terminal punctuation (`.!?:}])`) or is a list item/heading — not mid-word or ending with comma/conjunction, (4) quote mark balance. Pass if no truncation indicators. Failure message lists all truncation indicators found. | Status: done
+- [x] **Implement `toNotBeHedged`** — Split into sentences. Check each against hedging phrase catalog (case-insensitive). Compute hedging ratio (sentences with hedging / total). Pass if ratio <= maxHedgingRatio (default 0.3). Failure message shows ratio, lists detected hedging phrases with sentence numbers. | Status: done
+- [x] **Implement `toBeCompleteJSON`** — Combine `toBeValidJSON` and `toNotBeTruncated`. Fail if either fails, combining both failure messages. | Status: done
+- [x] **Implement `toNotRepeat`** — Split into sentences, count sentence frequencies. If any sentence appears > maxRepetitions (default 3) times, fail. Extract 4-grams, if any 4-gram appears > maxRepetitions * 2 times, fail. Failure message shows repeated sentences/phrases and their counts. | Status: done
 
 ---
 
@@ -142,9 +142,9 @@
 
 ### 5.2 Semantic Matchers (`src/matchers/semantic/`)
 
-- [ ] **Implement `toBeSemanticallySimilarTo`** — Async matcher. Require `embedFn` (throw descriptive error if missing). Embed both received and expected strings. Compute cosine similarity. Pass if similarity >= threshold (default 0.85). Use embedding cache. Failure message shows similarity score, threshold, received, and expected texts. Handle embedFn errors gracefully with descriptive error messages. | Status: not_done
-- [ ] **Implement `toAnswerQuestion`** — Async matcher. Embed question and received output. Compute cosine similarity (lower default threshold 0.70). Additionally check output is not a refusal (reuse refusal detection logic). Pass if similarity >= threshold AND not a refusal. Failure message shows similarity, threshold, question, and received. | Status: not_done
-- [ ] **Implement `toBeFactuallyConsistentWith`** — Async matcher. Split both reference and output into sentences. For each output sentence, find most similar reference sentence via embedding cosine similarity. Compute average best-match similarity. Flag sentences with <0.5 similarity as unsupported. Detect contradictions via negation word presence/absence between matched pairs (similarity 0.5-0.7 with negation flip). Penalize consistency score by 0.3 per contradiction. Pass if final score >= threshold (default 0.75). | Status: not_done
+- [x] **Implement `toBeSemanticallySimilarTo`** — Async matcher. Require `embedFn` (throw descriptive error if missing). Embed both received and expected strings. Compute cosine similarity. Pass if similarity >= threshold (default 0.85). Use embedding cache. Failure message shows similarity score, threshold, received, and expected texts. Handle embedFn errors gracefully with descriptive error messages. | Status: done
+- [x] **Implement `toAnswerQuestion`** — Async matcher. Embed question and received output. Compute cosine similarity (lower default threshold 0.70). Additionally check output is not a refusal (reuse refusal detection logic). Pass if similarity >= threshold AND not a refusal. Failure message shows similarity, threshold, question, and received. | Status: done
+- [x] **Implement `toBeFactuallyConsistentWith`** — Async matcher. Split both reference and output into sentences. For each output sentence, find most similar reference sentence via embedding cosine similarity. Compute average best-match similarity. Flag sentences with <0.5 similarity as unsupported. Detect contradictions via negation word presence/absence between matched pairs (similarity 0.5-0.7 with negation flip). Penalize consistency score by 0.3 per contradiction. Pass if final score >= threshold (default 0.75). | Status: done
 
 ### 5.3 Standalone Function Exports
 
@@ -184,10 +184,10 @@
 
 ### 7.3 Content Matcher Tests (`src/__tests__/content/`)
 
-- [ ] **Test `toContainAllOf`** — All keywords present: passes. One missing: fails with missing keyword listed. Case-insensitive match: passes. Partial word match does NOT pass (word boundary enforced, "car" doesn't match "cardinal"). Empty keywords array: passes. | Status: not_done
-- [ ] **Test `toContainAnyOf`** — One keyword present: passes. None present: fails. All present: passes. | Status: not_done
-- [ ] **Test `toNotContain`** — None present: passes. One present: fails with found keyword listed. Case-insensitive: detects. | Status: not_done
-- [ ] **Test `toMentionEntity`** — Alias match works (e.g., "US" matches "United States"). Direct match works. No match: fails with aliases listed. Entity not in alias table: falls back to substring match. | Status: not_done
+- [x] **Test `toContainAllOf`** — All keywords present: passes. One missing: fails with missing keyword listed. Case-insensitive match: passes. Partial word match does NOT pass (word boundary enforced, "car" doesn't match "cardinal"). Empty keywords array: passes. | Status: done
+- [x] **Test `toContainAnyOf`** — One keyword present: passes. None present: fails. All present: passes. | Status: done
+- [x] **Test `toNotContain`** — None present: passes. One present: fails with found keyword listed. Case-insensitive: detects. | Status: done
+- [x] **Test `toMentionEntity`** — Alias match works (e.g., "US" matches "United States"). Direct match works. No match: fails with aliases listed. Entity not in alias table: falls back to substring match. | Status: done
 - [ ] **Test `toHaveSentiment`** — Positive text detected as positive. Negative text detected as negative. Neutral text detected as neutral. Negation handling: "not good" = negative despite "good" being positive. Intensifier handling: "very good" scores higher than "good". | Status: not_done
 
 ### 7.4 Structural Matcher Tests (`src/__tests__/structural/`)
@@ -201,10 +201,10 @@
 
 ### 7.5 Format Matcher Tests (`src/__tests__/format/`)
 
-- [ ] **Test `toBeFormattedAs`** — `json` with valid JSON: passes. `json` with plain text: fails. `markdown` with headings and code fences: passes. `list` with numbered list: passes. `csv` with consistent columns: passes. `xml` with matched tags: passes. `yaml` with key-value pairs: passes. `table` with pipe-separated rows: passes. | Status: not_done
-- [ ] **Test `toHaveListItems`** — Exactly 5 items with `(5, 5)`: passes. 3 items with `(5, 5)`: fails. At least 3 with `(3)`: passes. Both numbered and bullet lists detected. Mixed list types. | Status: not_done
-- [ ] **Test `toStartWith`** — Correct prefix: passes. Wrong prefix: fails. Leading whitespace trimmed: passes. Case sensitive: exact match required. | Status: not_done
-- [ ] **Test `toEndWith`** — Correct suffix: passes. Wrong suffix: fails. Trailing whitespace trimmed: passes. Case sensitive: exact match required. | Status: not_done
+- [x] **Test `toBeFormattedAs`** — `json` with valid JSON: passes. `json` with plain text: fails. `markdown` with headings and code fences: passes. `list` with numbered list: passes. `csv` with consistent columns: passes. `xml` with matched tags: passes. `yaml` with key-value pairs: passes. `table` with pipe-separated rows: passes. | Status: done
+- [x] **Test `toHaveListItems`** — Exactly 5 items with `(5, 5)`: passes. 3 items with `(5, 5)`: fails. At least 3 with `(3)`: passes. Both numbered and bullet lists detected. Mixed list types. | Status: done
+- [x] **Test `toStartWith`** — Correct prefix: passes. Wrong prefix: fails. Leading whitespace trimmed: passes. Case sensitive: exact match required. | Status: done
+- [x] **Test `toEndWith`** — Correct suffix: passes. Wrong suffix: fails. Trailing whitespace trimmed: passes. Case sensitive: exact match required. | Status: done
 
 ### 7.6 Tone Matcher Tests (`src/__tests__/tone/`)
 
@@ -214,22 +214,22 @@
 
 ### 7.7 Safety Matcher Tests (`src/__tests__/safety/`)
 
-- [ ] **Test `toNotContainPII`** — Email detected: fails. Phone number detected: fails. SSN detected: fails. Valid credit card (Luhn passes): fails. Random 16-digit number (Luhn fails): passes. IPv4 detected (non-excluded): fails. Localhost 127.0.0.1: passes (excluded). US street address detected: fails. No PII: passes. Multiple PII types: all reported. | Status: not_done
-- [ ] **Test `toNotContainToxicContent`** — Profanity word present: fails. "Scunthorpe" substring false positive: passes (word boundary matching). Critical slur: fails. Info-level mild language: passes (reported but not failure). Clean text: passes. | Status: not_done
-- [ ] **Test `toNotLeakSystemPrompt`** — 30% n-gram overlap: fails. 5% n-gram overlap: passes. Verbatim 50+ char substring: fails. Completely different output: passes. Short system prompt edge case handled. | Status: not_done
+- [x] **Test `toNotContainPII`** — Email detected: fails. Phone number detected: fails. SSN detected: fails. Valid credit card (Luhn passes): fails. Random 16-digit number (Luhn fails): passes. IPv4 detected (non-excluded): fails. Localhost 127.0.0.1: passes (excluded). US street address detected: fails. No PII: passes. Multiple PII types: all reported. | Status: done
+- [x] **Test `toNotContainToxicContent`** — Profanity word present: fails. "Scunthorpe" substring false positive: passes (word boundary matching). Critical slur: fails. Info-level mild language: passes (reported but not failure). Clean text: passes. | Status: done
+- [x] **Test `toNotLeakSystemPrompt`** — 30% n-gram overlap: fails. 5% n-gram overlap: passes. Verbatim 50+ char substring: fails. Completely different output: passes. Short system prompt edge case handled. | Status: done
 
 ### 7.8 Quality Matcher Tests (`src/__tests__/quality/`)
 
-- [ ] **Test `toNotBeRefusal`** — Full refusal ("I can't help with that"): fails with refusal density. Normal answer: passes. Partial refusal (disclaimer + content): passes with warning in details. Multiple refusal phrases: all listed. | Status: not_done
-- [ ] **Test `toNotBeTruncated`** — Balanced brackets: passes. Unclosed `{`: fails. Odd code fence count: fails. Last line ending mid-sentence (comma/conjunction): fails. Complete sentence ending: passes. Quote balance checked. | Status: not_done
-- [ ] **Test `toNotBeHedged`** — Heavy hedging (>30%): fails. Light hedging (<30%): passes. Strict threshold (0.1) with moderate hedging: fails. Custom hedging phrases detected. | Status: not_done
-- [ ] **Test `toBeCompleteJSON`** — Valid complete JSON: passes. Valid but truncated JSON: fails. Invalid JSON: fails. Combines both failure messages. | Status: not_done
-- [ ] **Test `toNotRepeat`** — Same sentence 5 times (max 3): fails. Unique sentences: passes. 4-gram repeated > maxRepetitions*2 times: fails. Default max (3) applied. Strict max (1): no sentence can repeat. | Status: not_done
+- [x] **Test `toNotBeRefusal`** — Full refusal ("I can't help with that"): fails with refusal density. Normal answer: passes. Partial refusal (disclaimer + content): passes with warning in details. Multiple refusal phrases: all listed. | Status: done
+- [x] **Test `toNotBeTruncated`** — Balanced brackets: passes. Unclosed `{`: fails. Odd code fence count: fails. Last line ending mid-sentence (comma/conjunction): fails. Complete sentence ending: passes. Quote balance checked. | Status: done
+- [x] **Test `toNotBeHedged`** — Heavy hedging (>30%): fails. Light hedging (<30%): passes. Strict threshold (0.1) with moderate hedging: fails. Custom hedging phrases detected. | Status: done
+- [x] **Test `toBeCompleteJSON`** — Valid complete JSON: passes. Valid but truncated JSON: fails. Invalid JSON: fails. Combines both failure messages. | Status: done
+- [x] **Test `toNotRepeat`** — Same sentence 5 times (max 3): fails. Unique sentences: passes. 4-gram repeated > maxRepetitions*2 times: fails. Default max (3) applied. Strict max (1): no sentence can repeat. | Status: done
 
 ### 7.9 Integration Tests (`src/__tests__/setup.test.ts`)
 
 - [ ] **Test `setupAIAssertions` registers all matchers** — Set up with mock embedFn, verify all 28 matchers are available on `expect()`. | Status: not_done
-- [ ] **Test multiple `setupAIAssertions` calls** — Call setup twice with different options, verify last call wins for configuration. | Status: not_done
+- [x] **Test multiple `setupAIAssertions` calls** — Call setup twice with different options, verify last call wins for configuration. | Status: done
 - [ ] **Test `.not` negation** — Verify matchers work with `.not` (e.g., `expect(output).not.toContainAllOf([...])`). | Status: not_done
 - [ ] **Test async matchers with `await`** — Verify semantic matchers work correctly when awaited. | Status: not_done
 - [ ] **Test failure messages include both received and expected** — Verify that failing matchers produce messages with received value and expected criteria. | Status: not_done
