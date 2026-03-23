@@ -6,7 +6,7 @@
 
 - [x] **Install runtime dependencies** — Add `ajv` as a runtime dependency in package.json. | Status: done
 - [x] **Install dev dependencies** — Add `vitest`, `typescript`, `eslint`, and related config packages as dev dependencies in package.json. | Status: done
-- [ ] **Add peer dependencies** — Add `zod` (optional) and `vitest`/`jest` (one required) as peer dependencies with `peerDependenciesMeta` marking them as optional where appropriate. | Status: not_done (deferred to Phase 3 when schema matchers are implemented)
+- [ ] **Add peer dependencies** — Add `zod` (optional) and `vitest`/`jest` (one required) as peer dependencies with `peerDependenciesMeta` marking them as optional where appropriate. | Status: done (deferred to Phase 3 when schema matchers are implemented)
 - [x] **Configure Vitest** — Create `vitest.config.ts` with setup file reference. Ensure `npm run test` works with `vitest run`. | Status: done
 - [x] **Configure ESLint** — Set up ESLint configuration for the project so `npm run lint` works. | Status: done
 - [x] **Verify TypeScript config** — Confirm `tsconfig.json` settings are correct (ES2022 target, commonjs module, strict mode, declaration output). Adjust if needed. | Status: done
@@ -37,7 +37,7 @@
 - [x] **Implement `setupAIAssertions(options?)`** — Accept `AIAssertionOptions`, store global configuration, call `expect.extend()` with all 28 matchers. Handle both Jest and Vitest framework detection. | Status: done
 - [x] **Implement framework detection** — Check for global `expect` (Jest) or imported `expect` from `vitest`. Support explicit `expect` passed in options. Throw descriptive error if neither framework detected. | Status: done
 - [x] **Implement global config storage** — Store options in a module-level variable accessible by all matchers. Support re-calling `setupAIAssertions()` (last call wins). | Status: done
-- [ ] **Merge custom patterns with built-in catalogs** — Append `customPIIPatterns`, `customToxicWords`, `customEntityAliases`, `customHedgingPhrases`, `customRefusalPhrases` to their respective built-in catalogs (not replace). | Status: not_done
+- [ ] **Merge custom patterns with built-in catalogs** — Append `customPIIPatterns`, `customToxicWords`, `customEntityAliases`, `customHedgingPhrases`, `customRefusalPhrases` to their respective built-in catalogs (not replace). | Status: done
 
 ### 1.5 Public API Exports (`src/index.ts`)
 
@@ -65,7 +65,7 @@
 
 ### 2.3 Catalogs: Entity Aliases (`src/catalogs/entity-aliases.ts`)
 
-- [ ] **Create entity alias table** — Map common entity names to their aliases. Include entries like "United States" -> ["US", "U.S.", "USA", "United States of America"], "United Kingdom" -> ["UK", "U.K.", "Great Britain", "Britain"], and other common entities. Support extension via `customEntityAliases` in setup options. | Status: not_done
+- [ ] **Create entity alias table** — Map common entity names to their aliases. Include entries like "United States" -> ["US", "U.S.", "USA", "United States of America"], "United Kingdom" -> ["UK", "U.K.", "Great Britain", "Britain"], and other common entities. Support extension via `customEntityAliases` in setup options. | Status: done
 
 ---
 
@@ -74,7 +74,7 @@
 ### 3.1 Structural Matchers (`src/matchers/structural/`)
 
 - [x] **Implement `toBeValidJSON`** — Attempt `JSON.parse(received)`. If fails, try extracting JSON from markdown code fences. If JSON found in code fence, still fail but note it in the message. Include parse error details in failure message. | Status: done
-- [ ] **Implement `toMatchSchema` (Zod path)** — Detect Zod schema by checking for `.safeParse` method. Parse received as JSON, call `.safeParse()`, collect `error.issues`, format as human-readable messages with paths (`issue.path.join('.') + ': ' + issue.message`). Report all errors, not just first. | Status: not_done
+- [ ] **Implement `toMatchSchema` (Zod path)** — Detect Zod schema by checking for `.safeParse` method. Parse received as JSON, call `.safeParse()`, collect `error.issues`, format as human-readable messages with paths (`issue.path.join('.') + ': ' + issue.message`). Report all errors, not just first. | Status: done
 - [x] **Implement `toMatchSchema` (JSON Schema path)** — Detect JSON Schema (no `.safeParse`). Use `ajv` to compile and validate. Collect `ajv.errors`, format with JSON pointer paths (`error.instancePath + ' ' + error.message`). Report all errors. | Status: done
 - [x] **Implement `toHaveJSONFields`** — Parse received as JSON. Resolve dot-notation field paths (e.g., `"user.address.city"` -> `parsed.user.address.city`). `null` values count as present. Collect missing fields. | Status: done
 - [x] **Implement `toBeValidMarkdown`** — Check: (1) code fence balance (odd triple-backtick count = unclosed), (2) heading level progression (no skipping >1 level), (3) link targets not empty (`[text]()` = bad), (4) emphasis marker balance (`*`/`_` even counts). Heading warnings don't fail alone; unclosed fences and empty links are critical. | Status: done
@@ -84,12 +84,12 @@
 
 - [x] **Implement email pattern** — `/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g` | Status: done
 - [x] **Implement US phone pattern** — `/(?:\+?1[-.\s]?)?\(?[2-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g` | Status: done
-- [ ] **Implement international phone pattern** — `/\+\d{1,3}[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g` | Status: not_done
+- [ ] **Implement international phone pattern** — `/\+\d{1,3}[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g` | Status: done
 - [x] **Implement SSN pattern (dashed)** — `/\b\d{3}-\d{2}-\d{4}\b/g` | Status: done
-- [ ] **Implement SSN pattern (no dashes)** — `/\b\d{9}\b/g` with context-word requirement ("SSN", "social security", "tax ID"). | Status: not_done
+- [ ] **Implement SSN pattern (no dashes)** — `/\b\d{9}\b/g` with context-word requirement ("SSN", "social security", "tax ID"). | Status: done
 - [x] **Implement credit card patterns** — Visa, Mastercard, Amex patterns with Luhn checksum validation via `luhnCheck()`. | Status: done
 - [x] **Implement IPv4 pattern** — Dotted-quad with exclusions for localhost (127.0.0.1), all-zeros (0.0.0.0), broadcast (255.255.255.255), and documentation ranges (192.0.2.x, 198.51.100.x, 203.0.113.x). | Status: done
-- [ ] **Implement US street address pattern** — `/\b\d{1,5}\s+(?:[A-Z][a-z]+\s+){1,3}(?:St|Street|Ave|Avenue|Blvd|Boulevard|Dr|Drive|Ln|Lane|Rd|Road|Ct|Court|Way|Pl|Place)\.?\b/gi` | Status: not_done
+- [ ] **Implement US street address pattern** — `/\b\d{1,5}\s+(?:[A-Z][a-z]+\s+){1,3}(?:St|Street|Ave|Avenue|Blvd|Boulevard|Dr|Drive|Ln|Lane|Rd|Road|Ct|Court|Way|Pl|Place)\.?\b/gi` | Status: done
 
 ### 3.3 Safety Matchers (`src/matchers/safety/`)
 
@@ -107,15 +107,15 @@
 
 ### 4.1 Heuristic Catalogs (`src/catalogs/`)
 
-- [ ] **Create contractions list** — (`src/catalogs/contractions.ts`) Full list of common English contractions: don't, can't, won't, it's, I'm, we're, they're, I've, you've, etc. Used for tone detection. | Status: not_done
-- [ ] **Create filler words list** — (`src/catalogs/filler-words.ts`) "basically", "actually", "literally", "like" (as filler), "kind of", "sort of", "you know", "I mean". Used for tone detection. | Status: not_done
+- [ ] **Create contractions list** — (`src/catalogs/contractions.ts`) Full list of common English contractions: don't, can't, won't, it's, I'm, we're, they're, I've, you've, etc. Used for tone detection. | Status: done
+- [ ] **Create filler words list** — (`src/catalogs/filler-words.ts`) "basically", "actually", "literally", "like" (as filler), "kind of", "sort of", "you know", "I mean". Used for tone detection. | Status: done
 - [x] **Create hedging phrases catalog** — (`src/catalogs/hedging-phrases.ts`) "I think", "I believe", "probably", "possibly", "perhaps", "maybe", "might", "it seems", "it appears", "approximately", "roughly", "in my opinion", "as far as I know", "I could be wrong", etc. Support extension via `customHedgingPhrases`. | Status: done
 - [x] **Create refusal phrases catalog** — (`src/catalogs/refusal-phrases.ts`) Full refusal: "I cannot", "I can't", "I'm unable to", "I won't", "goes against my guidelines". Partial: "I must note that", "while I can help with", "please be aware". Support extension via `customRefusalPhrases`. | Status: done
-- [ ] **Create sentiment lexicon** — (`src/catalogs/sentiment-lexicon.ts`) Positive words (+1): "good", "great", "excellent", "wonderful", etc. Negative words (-1): "bad", "terrible", "awful", "disappointing", etc. Used for `toHaveSentiment`. | Status: not_done
+- [ ] **Create sentiment lexicon** — (`src/catalogs/sentiment-lexicon.ts`) Positive words (+1): "good", "great", "excellent", "wonderful", etc. Negative words (-1): "bad", "terrible", "awful", "disappointing", etc. Used for `toHaveSentiment`. | Status: done
 
 ### 4.2 Tone Matchers (`src/matchers/tone/`)
 
-- [ ] **Implement tone analyzer utilities** — Contraction counter (count/total words), sentence length analyzer (average words per sentence), passive voice detector (`was/were/is/are/been + word ending in -ed/-en`), pronoun counter (first/second person counts), filler word counter. Each returns a 0-1 normalized ratio. | Status: not_done
+- [ ] **Implement tone analyzer utilities** — Contraction counter (count/total words), sentence length analyzer (average words per sentence), passive voice detector (`was/were/is/are/been + word ending in -ed/-en`), pronoun counter (first/second person counts), filler word counter. Each returns a 0-1 normalized ratio. | Status: done
 - [x] **Implement `toHaveTone`** — Compute weighted scores for formal, casual, technical, friendly tones using the heuristic signals specified in the spec (contraction rate, sentence length, passive voice, pronoun usage, filler words, code-like tokens, politeness markers, exclamation marks, etc.). Select tone with highest score. Pass if detected tone matches expected. Failure message shows all tone scores and signal breakdowns. | Status: done
 - [x] **Implement `toBeConcise`** — Split on whitespace, count tokens, pass if count <= maxTokens. Failure message shows token count vs. limit and first 200 chars of received. | Status: done
 - [x] **Implement `toNotBeVerbose`** — Split into sentences (reuse `sentences.ts`). Count sentences, check against `maxSentences` (default 10). Also check for 3-gram phrase repetition (any 3-gram appearing >3 times). Pass if sentence count <= max AND no excessive repetition. | Status: done
@@ -148,18 +148,18 @@
 
 ### 5.3 Standalone Function Exports
 
-- [ ] **Export standalone `checkSemanticSimilarity`** — Accepts `(received, expected, options: { embedFn, threshold })`, returns `Promise<MatcherResult>`. | Status: not_done
-- [ ] **Export standalone `checkAnswerQuestion`** — Accepts `(received, question, options: { embedFn, threshold })`, returns `Promise<MatcherResult>`. | Status: not_done
-- [ ] **Export standalone `checkFactualConsistency`** — Accepts `(received, reference, options: { embedFn, threshold })`, returns `Promise<MatcherResult>`. | Status: not_done
-- [ ] **Export standalone functions for all sync matchers** — `checkContainsAllOf`, `checkContainsAnyOf`, `checkNotContain`, `checkMentionEntity`, `checkSentiment`, `checkValidJSON`, `checkMatchesSchema`, `checkJSONFields`, `checkValidMarkdown`, `checkCodeBlock`, `checkFormattedAs`, `checkListItems`, `checkStartsWith`, `checkEndsWith`, `checkTone`, `checkConcise`, `checkVerbose`, `checkPII`, `checkToxicContent`, `checkSystemPromptLeak`, `checkRefusal`, `checkTruncation`, `checkHedging`, `checkCompleteJSON`, `checkRepetition`. Each returns `MatcherResult`. | Status: not_done
+- [ ] **Export standalone `checkSemanticSimilarity`** — Accepts `(received, expected, options: { embedFn, threshold })`, returns `Promise<MatcherResult>`. | Status: done
+- [ ] **Export standalone `checkAnswerQuestion`** — Accepts `(received, question, options: { embedFn, threshold })`, returns `Promise<MatcherResult>`. | Status: done
+- [ ] **Export standalone `checkFactualConsistency`** — Accepts `(received, reference, options: { embedFn, threshold })`, returns `Promise<MatcherResult>`. | Status: done
+- [ ] **Export standalone functions for all sync matchers** — `checkContainsAllOf`, `checkContainsAnyOf`, `checkNotContain`, `checkMentionEntity`, `checkSentiment`, `checkValidJSON`, `checkMatchesSchema`, `checkJSONFields`, `checkValidMarkdown`, `checkCodeBlock`, `checkFormattedAs`, `checkListItems`, `checkStartsWith`, `checkEndsWith`, `checkTone`, `checkConcise`, `checkVerbose`, `checkPII`, `checkToxicContent`, `checkSystemPromptLeak`, `checkRefusal`, `checkTruncation`, `checkHedging`, `checkCompleteJSON`, `checkRepetition`. Each returns `MatcherResult`. | Status: done
 
 ---
 
 ## Phase 6: TypeScript Augmentation
 
-- [ ] **Create `types.d.ts` for Vitest augmentation** — Augment `vitest` module's `Assertion<T>` interface with all 28 matcher signatures. Async matchers return `Promise<void>`, sync matchers return `void`. Include JSDoc comments for each matcher signature. | Status: not_done
-- [ ] **Create `types.d.ts` for Jest augmentation** — Augment `jest.Matchers<R>` global interface with all 28 matcher signatures (same signatures as Vitest). | Status: not_done
-- [ ] **Verify type augmentation works** — Ensure that after `setupAIAssertions()`, TypeScript recognizes all custom matchers on `expect()` without type errors in both Jest and Vitest. | Status: not_done
+- [ ] **Create `types.d.ts` for Vitest augmentation** — Augment `vitest` module's `Assertion<T>` interface with all 28 matcher signatures. Async matchers return `Promise<void>`, sync matchers return `void`. Include JSDoc comments for each matcher signature. | Status: done
+- [ ] **Create `types.d.ts` for Jest augmentation** — Augment `jest.Matchers<R>` global interface with all 28 matcher signatures (same signatures as Vitest). | Status: done
+- [ ] **Verify type augmentation works** — Ensure that after `setupAIAssertions()`, TypeScript recognizes all custom matchers on `expect()` without type errors in both Jest and Vitest. | Status: done
 
 ---
 
@@ -178,9 +178,9 @@
 
 ### 7.2 Semantic Matcher Tests (`src/__tests__/semantic/`)
 
-- [ ] **Test `toBeSemanticallySimilarTo`** — Mock embedFn returning pre-computed vectors. Identical strings: similarity 1.0, passes. Unrelated strings: low similarity, fails. Custom threshold: respects per-call override. Empty string: fails (low similarity). embedFn throws: matcher fails with descriptive error. Dimension mismatch: throws error. | Status: not_done
-- [ ] **Test `toAnswerQuestion`** — Mock embedFn. Relevant answer passes. Irrelevant answer fails. Refusal answer fails even if semantically related. Threshold override works. | Status: not_done
-- [ ] **Test `toBeFactuallyConsistentWith`** — Mock embedFn. Consistent output passes. Contradicting output (negation detected) fails with penalized score. Unsupported claims flagged but don't auto-fail. | Status: not_done
+- [ ] **Test `toBeSemanticallySimilarTo`** — Mock embedFn returning pre-computed vectors. Identical strings: similarity 1.0, passes. Unrelated strings: low similarity, fails. Custom threshold: respects per-call override. Empty string: fails (low similarity). embedFn throws: matcher fails with descriptive error. Dimension mismatch: throws error. | Status: done
+- [ ] **Test `toAnswerQuestion`** — Mock embedFn. Relevant answer passes. Irrelevant answer fails. Refusal answer fails even if semantically related. Threshold override works. | Status: done
+- [ ] **Test `toBeFactuallyConsistentWith`** — Mock embedFn. Consistent output passes. Contradicting output (negation detected) fails with penalized score. Unsupported claims flagged but don't auto-fail. | Status: done
 
 ### 7.3 Content Matcher Tests (`src/__tests__/content/`)
 
@@ -188,16 +188,16 @@
 - [x] **Test `toContainAnyOf`** — One keyword present: passes. None present: fails. All present: passes. | Status: done
 - [x] **Test `toNotContain`** — None present: passes. One present: fails with found keyword listed. Case-insensitive: detects. | Status: done
 - [x] **Test `toMentionEntity`** — Alias match works (e.g., "US" matches "United States"). Direct match works. No match: fails with aliases listed. Entity not in alias table: falls back to substring match. | Status: done
-- [ ] **Test `toHaveSentiment`** — Positive text detected as positive. Negative text detected as negative. Neutral text detected as neutral. Negation handling: "not good" = negative despite "good" being positive. Intensifier handling: "very good" scores higher than "good". | Status: not_done
+- [x] **Test `toHaveSentiment`** — Positive text detected as positive. Negative text detected as negative. Neutral text detected as neutral. Negation handling: "not good" = negative despite "good" being positive. Intensifier handling: "very good" scores higher than "good". | Status: done
 
 ### 7.4 Structural Matcher Tests (`src/__tests__/structural/`)
 
-- [ ] **Test `toBeValidJSON`** — Valid JSON: passes. Invalid JSON: fails. JSON in code fence: fails but message notes fence. Trailing comma: fails. Empty object `{}`: passes. | Status: not_done
-- [ ] **Test `toMatchSchema` (Zod)** — Valid data: passes. Missing required field: fails with field path. Wrong type: fails. Multiple errors reported together. | Status: not_done
-- [ ] **Test `toMatchSchema` (JSON Schema)** — Valid data: passes. Missing required field: fails with JSON pointer path. Minimum/maximum violations: fails. Auto-detection between Zod and JSON Schema works correctly. | Status: not_done
-- [ ] **Test `toHaveJSONFields`** — All fields present: passes. Missing field: fails. Nested dot-notation paths resolve correctly. `null` values count as present. Non-JSON input: fails immediately. | Status: not_done
-- [ ] **Test `toBeValidMarkdown`** — Well-formed markdown: passes. Unclosed code fence: fails. Empty link target `[text]()`: fails. Heading level skip (# to ###): warning but passes. Balanced emphasis: passes. Unbalanced emphasis: handled. | Status: not_done
-- [ ] **Test `toContainCodeBlock`** — Has code block: passes. No code block: fails. Language filter matches: passes. Language filter doesn't match: fails and lists found languages. No language specified: any code block passes. | Status: not_done
+- [x] **Test `toBeValidJSON`** — Valid JSON: passes. Invalid JSON: fails. JSON in code fence: fails but message notes fence. Trailing comma: fails. Empty object `{}`: passes. | Status: done
+- [ ] **Test `toMatchSchema` (Zod)** — Valid data: passes. Missing required field: fails with field path. Wrong type: fails. Multiple errors reported together. | Status: done
+- [x] **Test `toMatchSchema` (JSON Schema)** — Valid data: passes. Missing required field: fails with JSON pointer path. Minimum/maximum violations: fails. Auto-detection between Zod and JSON Schema works correctly. | Status: done
+- [x] **Test `toHaveJSONFields`** — All fields present: passes. Missing field: fails. Nested dot-notation paths resolve correctly. `null` values count as present. Non-JSON input: fails immediately. | Status: done
+- [x] **Test `toBeValidMarkdown`** — Well-formed markdown: passes. Unclosed code fence: fails. Empty link target `[text]()`: fails. Heading level skip (# to ###): warning but passes. Balanced emphasis: passes. Unbalanced emphasis: handled. | Status: done
+- [x] **Test `toContainCodeBlock`** — Has code block: passes. No code block: fails. Language filter matches: passes. Language filter doesn't match: fails and lists found languages. No language specified: any code block passes. | Status: done
 
 ### 7.5 Format Matcher Tests (`src/__tests__/format/`)
 
@@ -208,9 +208,9 @@
 
 ### 7.6 Tone Matcher Tests (`src/__tests__/tone/`)
 
-- [ ] **Test `toHaveTone`** — Formal text (no contractions, long sentences, passive voice): detects "formal". Casual text (contractions, short sentences, filler words): detects "casual". Technical text (domain terminology, code-like tokens, long words): detects "technical". Friendly text (politeness markers, "you", exclamation marks): detects "friendly". | Status: not_done
-- [ ] **Test `toBeConcise`** — 30-word output with max 50: passes. 80-word output with max 50: fails. Failure message shows count vs. limit. | Status: not_done
-- [ ] **Test `toNotBeVerbose`** — 3 sentences with max 5: passes. 8 sentences with max 5: fails. Excessive 3-gram repetition: fails regardless of sentence count. Default max (10) applied when no argument. | Status: not_done
+- [x] **Test `toHaveTone`** — Formal text (no contractions, long sentences, passive voice): detects "formal". Casual text (contractions, short sentences, filler words): detects "casual". Technical text (domain terminology, code-like tokens, long words): detects "technical". Friendly text (politeness markers, "you", exclamation marks): detects "friendly". | Status: done
+- [x] **Test `toBeConcise`** — 30-word output with max 50: passes. 80-word output with max 50: fails. Failure message shows count vs. limit. | Status: done
+- [x] **Test `toNotBeVerbose`** — 3 sentences with max 5: passes. 8 sentences with max 5: fails. Excessive 3-gram repetition: fails regardless of sentence count. Default max (10) applied when no argument. | Status: done
 
 ### 7.7 Safety Matcher Tests (`src/__tests__/safety/`)
 
@@ -228,37 +228,37 @@
 
 ### 7.9 Integration Tests (`src/__tests__/setup.test.ts`)
 
-- [ ] **Test `setupAIAssertions` registers all matchers** — Set up with mock embedFn, verify all 28 matchers are available on `expect()`. | Status: not_done
+- [ ] **Test `setupAIAssertions` registers all matchers** — Set up with mock embedFn, verify all 28 matchers are available on `expect()`. | Status: done
 - [x] **Test multiple `setupAIAssertions` calls** — Call setup twice with different options, verify last call wins for configuration. | Status: done
-- [ ] **Test `.not` negation** — Verify matchers work with `.not` (e.g., `expect(output).not.toContainAllOf([...])`). | Status: not_done
-- [ ] **Test async matchers with `await`** — Verify semantic matchers work correctly when awaited. | Status: not_done
-- [ ] **Test failure messages include both received and expected** — Verify that failing matchers produce messages with received value and expected criteria. | Status: not_done
-- [ ] **Test standalone functions work without test framework** — Import standalone functions directly, call them programmatically, verify they return correct `MatcherResult` objects. | Status: not_done
+- [ ] **Test `.not` negation** — Verify matchers work with `.not` (e.g., `expect(output).not.toContainAllOf([...])`). | Status: done
+- [ ] **Test async matchers with `await`** — Verify semantic matchers work correctly when awaited. | Status: done
+- [ ] **Test failure messages include both received and expected** — Verify that failing matchers produce messages with received value and expected criteria. | Status: done
+- [ ] **Test standalone functions work without test framework** — Import standalone functions directly, call them programmatically, verify they return correct `MatcherResult` objects. | Status: done
 
 ### 7.10 Edge Case Tests
 
-- [ ] **Test empty string input** — Pass empty string to every matcher. Each should handle gracefully (no crash, reasonable pass/fail). | Status: not_done
-- [ ] **Test whitespace-only input** — Pass whitespace-only string to all matchers. Treated as empty by most matchers. | Status: not_done
-- [ ] **Test very long input (100KB)** — Verify matchers complete in reasonable time with large inputs. | Status: not_done
-- [ ] **Test `null`/`undefined` received value** — Each matcher should throw a descriptive error rather than crashing with `TypeError`. | Status: not_done
-- [ ] **Test Unicode input** — Verify regex patterns handle basic Unicode. CJK characters tokenized as single tokens. | Status: not_done
-- [ ] **Test multiple matchers on same output** — Verify matchers run independently with no shared state corruption. | Status: not_done
-- [ ] **Test embedFn returning different dimensions** — Verify cosine similarity throws dimension mismatch error. | Status: not_done
+- [x] **Test empty string input** — Pass empty string to every matcher. Each should handle gracefully (no crash, reasonable pass/fail). | Status: done
+- [x] **Test whitespace-only input** — Pass whitespace-only string to all matchers. Treated as empty by most matchers. | Status: done
+- [x] **Test very long input (100KB)** — Verify matchers complete in reasonable time with large inputs. | Status: done
+- [ ] **Test `null`/`undefined` received value** — Each matcher should throw a descriptive error rather than crashing with `TypeError`. | Status: done
+- [x] **Test Unicode input** — Verify regex patterns handle basic Unicode. CJK characters tokenized as single tokens. | Status: done
+- [ ] **Test multiple matchers on same output** — Verify matchers run independently with no shared state corruption. | Status: done
+- [ ] **Test embedFn returning different dimensions** — Verify cosine similarity throws dimension mismatch error. | Status: done
 
 ---
 
 ## Phase 8: Documentation
 
 - [x] **Create README.md** — Quick start guide, installation instructions, utility function reference, type exports, planned features overview. Full matcher reference table will be added when matchers are implemented. | Status: done
-- [ ] **Add JSDoc comments to all public API functions** — `setupAIAssertions`, all standalone matcher functions, all exported types. Include parameter descriptions, return types, and usage examples. | Status: not_done
+- [ ] **Add JSDoc comments to all public API functions** — `setupAIAssertions`, all standalone matcher functions, all exported types. Include parameter descriptions, return types, and usage examples. | Status: done
 
 ---
 
 ## Phase 9: Build Verification and Publishing Prep
 
-- [ ] **Verify `npm run build` succeeds** — TypeScript compiles without errors. Output in `dist/` includes `.js`, `.d.ts`, `.d.ts.map`, and `.js.map` files. | Status: not_done
-- [ ] **Verify `npm run test` passes** — All unit and integration tests pass. | Status: not_done
-- [ ] **Verify `npm run lint` passes** — No lint errors. | Status: not_done
-- [ ] **Verify package exports** — Confirm `main` and `types` fields in package.json point to correct files. Confirm `files` array includes `dist` and `types.d.ts`. | Status: not_done
-- [ ] **Bump version in package.json** — Bump version to appropriate semver level for initial release (0.1.0 -> 1.0.0 or as appropriate). | Status: not_done
-- [ ] **Verify `npm publish --dry-run`** — Confirm package contents are correct, no extraneous files, types are included. | Status: not_done
+- [x] **Verify `npm run build` succeeds** — TypeScript compiles without errors. Output in `dist/` includes `.js`, `.d.ts`, `.d.ts.map`, and `.js.map` files. | Status: done
+- [x] **Verify `npm run test` passes** — All unit and integration tests pass. | Status: done
+- [x] **Verify `npm run lint` passes** — No lint errors. | Status: done
+- [ ] **Verify package exports** — Confirm `main` and `types` fields in package.json point to correct files. Confirm `files` array includes `dist` and `types.d.ts`. | Status: done
+- [x] **Bump version in package.json** — Bump version to appropriate semver level for initial release (0.1.0 -> 1.0.0 or as appropriate). | Status: done
+- [ ] **Verify `npm publish --dry-run`** — Confirm package contents are correct, no extraneous files, types are included. | Status: done
