@@ -51,6 +51,15 @@ describe('toMatchSchema', () => {
     expect(r.pass).toBe(false);
     expect(r.message()).toContain('not valid JSON');
   });
+  it('fails when schema is invalid/malformed', () => {
+    const invalidSchema = { type: 'object', properties: { x: { type: 'not-a-real-type' } } };
+    const r = toMatchSchema('{"x":1}', invalidSchema);
+    expect(r.pass).toBe(false);
+    expect(r.message()).toContain('schema');
+    expect(r.details.validationErrors).toBeDefined();
+    expect((r.details.validationErrors as string[]).length).toBeGreaterThan(0);
+    expect((r.details.validationErrors as string[])[0]).toContain('Schema compilation error');
+  });
 });
 
 describe('toHaveJSONFields', () => {
