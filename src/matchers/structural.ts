@@ -63,8 +63,8 @@ export function toMatchSchema(received: string, schema: object): MatcherResult {
     pass = validate(value) as boolean;
     validationErrors = (validate.errors ?? []).map((e) => `${e.instancePath} ${e.message}`);
   } catch (e) {
-    // Fallback: basic type checking if Ajv fails
-    pass = true;
+    // Schema compilation failed — treat as a non-match
+    pass = false;
     validationErrors = [`Schema compilation error: ${(e as Error).message}`];
   }
 
